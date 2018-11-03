@@ -43,7 +43,6 @@ public class PlayerController : MonoBehaviour
         else if (_distanceToShopKeeper > 2.5)
 	    {
 	        DialogueCanvas.SetActive(false);
-            
 	    }
 	}
 
