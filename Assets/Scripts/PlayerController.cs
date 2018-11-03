@@ -10,15 +10,17 @@ public class PlayerController : MonoBehaviour
     public Rigidbody2D Player;
     public Animator PlayerAnimator;
     public Rigidbody2D ShopKeeper;
-    private Vector2 _speed = new Vector2(10f, 10f);
+    public GameObject DialogueCanvas;
+    private Vector2 _speed = new Vector2(8f, 8f);
     private float _horizontalInput;
     private float _verticalInput;
     private float _distanceToShopKeeper;
 
+
     // Use this for initialization
     void Start ()
     {
-        ShopKeeper = GetComponent<Rigidbody2D>();
+        //ShopKeeper = GetComponent<Rigidbody2D>();
 	    Player = GetComponent<Rigidbody2D>();
 	    PlayerAnimator = GetComponent<Animator>();
 	}
@@ -28,17 +30,27 @@ public class PlayerController : MonoBehaviour
 	{
 	     _horizontalInput = Input.GetAxis("Horizontal");
 	     _verticalInput = Input.GetAxis("Vertical");
-	    if (_distanceToShopKeeper < 20 && Input.GetKeyDown(KeyCode.E))
+        Debug.Log(_distanceToShopKeeper);
+        //Debug.Log(Mathf.Abs(Player.transform.position.x - ShopKeeper.transform.position.x));
+        //Debug.Log(Mathf.Abs(Player.transform.position.y - ShopKeeper.transform.position.y));
+	    if (_distanceToShopKeeper < 2.5 && Input.GetKeyDown(KeyCode.E))
 	    {
             //TODO: Rozpoczęcie dialogu z ShopKeeperem
+            DialogueCanvas.SetActive(!DialogueCanvas.activeSelf);
             Debug.Log("Dialogue Started!");
+            
+	    }
+        else if (_distanceToShopKeeper > 2.5)
+	    {
+	        DialogueCanvas.SetActive(false);
+            
 	    }
 	}
 
     void FixedUpdate()
     {
         Player.velocity = new Vector2(_speed.x * _horizontalInput, _speed.y * _verticalInput);
-        _distanceToShopKeeper = AddMath.Pitagorem(Mathf.Abs(Player.transform.position.x - ShopKeeper.transform.position.x), (Player.transform.position.y - ShopKeeper.transform.position.y));
+        _distanceToShopKeeper = AddMath.Pitagorem(Mathf.Abs(Player.transform.position.x - ShopKeeper.transform.position.x), Mathf.Abs(Player.transform.position.y - ShopKeeper.transform.position.y));
     }
 
     void OnTriggerEnter2D(Collider2D trig)
