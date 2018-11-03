@@ -61,6 +61,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Assets\Additional Scripts\AddMath.cs" />
     <Compile Include="Assets\Additional Scripts\OtherValues.cs" />
     <Compile Include="Assets\Scripts\Houses\FrankHouse.cs" />
     <Compile Include="Assets\Scripts\Houses\SinatraHouse.cs" />
