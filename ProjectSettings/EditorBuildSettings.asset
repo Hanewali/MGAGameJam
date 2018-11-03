@@ -11,4 +11,10 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Buildings/FrankHouse.unity
     guid: 6a29246f60649f84cb44cdfdab109baa
+  - enabled: 1
+    path: Assets/Scenes/Buildings/AlbertHouse.unity
+    guid: 63c6258f97bd58e4f8966a547e74fd60
+  - enabled: 1
+    path: Assets/Scenes/Buildings/SinatraHouse.unity
+    guid: 1a4a9d47a2866d2468e8e5991c0255dd
   m_configObjects: {}
