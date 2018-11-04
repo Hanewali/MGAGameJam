@@ -1,8 +1,5 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using Assets.Additional_Scripts;
+﻿using Assets.Additional_Scripts;
 using UnityEngine;
-using UnityEngine.Experimental.PlayerLoop;
 using UnityEngine.SceneManagement;
 
 public class PlayerController : MonoBehaviour
@@ -16,11 +13,16 @@ public class PlayerController : MonoBehaviour
     private float _verticalInput;
     private float _distanceToShopKeeper;
 
+    private Vector2 FrankFront = new Vector3(3f, 0f, 0f);
+    private Vector2 AlbertFront = new Vector3(5f, 0f, 0f);
+    private Vector2 SinatraFront = new Vector3(0f, 2f, 0f);
+
+    public static int itemValue = 2000;
+
 
     // Use this for initialization
     void Start ()
     {
-        //ShopKeeper = GetComponent<Rigidbody2D>();
 	    Player = GetComponent<Rigidbody2D>();
 	    PlayerAnimator = GetComponent<Animator>();
 	}
@@ -30,19 +32,16 @@ public class PlayerController : MonoBehaviour
 	{
 	     _horizontalInput = Input.GetAxis("Horizontal");
 	     _verticalInput = Input.GetAxis("Vertical");
-        Debug.Log(_distanceToShopKeeper);
-        //Debug.Log(Mathf.Abs(Player.transform.position.x - ShopKeeper.transform.position.x));
-        //Debug.Log(Mathf.Abs(Player.transform.position.y - ShopKeeper.transform.position.y));
 	    if (_distanceToShopKeeper < 2.5 && Input.GetKeyDown(KeyCode.E))
 	    {
-            //TODO: Rozpoczęcie dialogu z ShopKeeperem
             DialogueCanvas.SetActive(!DialogueCanvas.activeSelf);
-            Debug.Log("Dialogue Started!");
-            
+	        if (DialogueCanvas.activeSelf) FrankController.isTrue = true;
+            else if (!DialogueCanvas.activeSelf) {FrankController.isTrue = false;}
 	    }
         else if (_distanceToShopKeeper > 2.5)
 	    {
 	        DialogueCanvas.SetActive(false);
+	        FrankController.isTrue = false;
 	    }
 	}
 
@@ -68,7 +67,23 @@ public class PlayerController : MonoBehaviour
         }
         if (trig.gameObject.name == "Out")
         {
-            SceneManager.LoadScene("Main");
+            if (SceneManager.GetActiveScene().name == "FrankHouse")
+            {
+                SceneManager.LoadSceneAsync("Main");
+                Player.transform.position = FrankFront;
+            }
+
+            else if (SceneManager.GetActiveScene().name == "SinatraHouse")
+            {
+                SceneManager.LoadScene("Main");
+                Player.MovePosition(SinatraFront);
+            }
+
+            else if (SceneManager.GetActiveScene().name == "AlbertHouse")
+            {
+                SceneManager.LoadScene("Main");
+                Player.MovePosition(AlbertFront);
+            }
         }
     }
 }
